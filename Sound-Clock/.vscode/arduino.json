@@ -1,0 +1,6 @@
+{
+    "board": "SparkFun:esp32:esp32thing",
+    "configuration": "FlashFreq=80,PartitionScheme=no_ota,UploadSpeed=921600,DebugLevel=none",
+    "sketch": "Sound-Clock.ino",
+    "port": "/dev/ttyUSB0"
+}

@@ -1,0 +1,38 @@
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/Users/dave/Library/Arduino15/packages/esp32/tools/**",
+                "/Users/dave/Library/Arduino15/packages/esp32/hardware/esp32/1.0.0/**",
+                "C:/Users/Ryan.Jensen2/Documents/Arduino/libraries/ezTime/src",
+                "/home/dave/.arduino15/packages/SparkFun/hardware/esp32/1.0.0/**",
+                "/home/dave/Apps/arduino-1.8.13/libraries/**",
+                "/home/dave/Arduino/libraries/**"
+            ],
+            "forcedInclude": [],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "USBCON"
+            ],
+            "intelliSenseMode": "msvc-x64",
+            "compilerPath": "/usr/bin/clang"
+        },
+        {
+            "name": "Linux",
+            "includePath": [
+                "/home/dave/Arduino/libraries/**",
+                "/home/dave/Apps/arduino-1.8.13/libraries/**",
+                "/home/dave/.arduino15/packages/SparkFun/hardware/esp32/1.0.0/**"
+            ],
+            "forcedInclude": [],
+            "defines": [
+                "USBCON"
+            ]
+        }
+    ],
+    "version": 4
+}

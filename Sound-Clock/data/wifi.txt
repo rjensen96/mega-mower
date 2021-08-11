@@ -1,0 +1,4 @@
+<wifi ssid>,<password>
+
+
+That's the format of the file that should be named "wifi.cfg" in this folder.  Then "Upload sketch data".
