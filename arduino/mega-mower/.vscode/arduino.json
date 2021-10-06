@@ -1,0 +1,6 @@
+{
+  "configuration": "FlashFreq=80,PartitionScheme=default,UploadSpeed=115200,DebugLevel=none",
+  "board": "esp32:esp32:esp32thing",
+  "sketch": "mega-mower.ino",
+  "port": "COM3"
+}
