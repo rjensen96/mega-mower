@@ -4,9 +4,9 @@ module gear() {
 }
 
 module grub_screw_hole() {
-    translate([0, 0, 25]) {
+    translate([0, 0, 24]) {
         rotate([90, 0, 0]) {
-            cylinder(r=2.8, h=40, $fn=200);
+            cylinder(r=1.9, h=40, $fn=200);
     
         }
     }

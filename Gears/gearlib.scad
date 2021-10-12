@@ -1,21 +1,21 @@
 
 /* [Basic Gear Parameters] */
-Module = 1; // 0.01
+Module = 4; // 0.01
 
 Gear_type = "spur_gear"; // ["rack":Rack, "spur_gear":Spur gear, "herringbone_gear":Herringbone gear, "rack_and_pinion": Rack and pinion, "annular_spur_gear":Annular/Internal spur gear, "annular_herringbone_gear":Annular/Internal herrinbone gear, "planetary_gear":Planetary gear, "bevel_gear":Bevel gear, "bevel_gears":Bevel gears, "herringbone_bevel_gear":Herringbone bevel gear, "herringbone_bevel_gears":Herringbone bevel gears, "worm":Worm, "worm_drive":Worm drive]
 
 width = 20.0; // 0.01
-teeth = 18;
+teeth = 6;
 bore = 5.25; // 0.01
 straight = true;
 
 /* [Advanced Parameters] */
 hub = true;
-hub_diameter = 14; // 0.01
-hub_thickness = 12; // 0.01
+hub_diameter = 13; // 0.01
+hub_thickness = 8; // 0.01
 // (Weight optimization if applicable)
 optimized = false;
-pressure_angle = 20; // 0.01
+pressure_angle = 26; // 0.01
 helix_angle = 0; // 0.01
 clearance = 0.05; // 0.01
 
