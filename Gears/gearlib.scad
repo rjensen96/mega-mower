@@ -5,7 +5,7 @@ Module = 2.5; // 0.01
 Gear_type = "spur_gear"; // ["rack":Rack, "spur_gear":Spur gear, "herringbone_gear":Herringbone gear, "rack_and_pinion": Rack and pinion, "annular_spur_gear":Annular/Internal spur gear, "annular_herringbone_gear":Annular/Internal herrinbone gear, "planetary_gear":Planetary gear, "bevel_gear":Bevel gear, "bevel_gears":Bevel gears, "herringbone_bevel_gear":Herringbone bevel gear, "herringbone_bevel_gears":Herringbone bevel gears, "worm":Worm, "worm_drive":Worm drive]
 
 width = 20.0; // 0.01
-teeth = 13;
+teeth = 12;
 bore = 5.25; // 0.01
 straight = true;
 
