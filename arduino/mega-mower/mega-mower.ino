@@ -1,12 +1,29 @@
+#include "wsconfig.hpp"
+#include "motor-driver.hpp"
+
 /* Example sketch to control a stepper motor with TB6600 stepper motor driver and Arduino without a library: continuous rotation. More info: https://www.makerguides.com */
 
 // Define stepper motor connections:
-#define dirPin 19
-#define stepPin 23
+// #define dirPin 19
+// #define stepPin 23
+
+// WiFi Credentials are in wsconfig.hpp
 
 // in our rig, RED = 19; ORANGE = 23; BLACK = GND; BROWN = IGNORE;
 // side of stepper driver switches:
 // ON: 1, 2, 4, 6.
+
+void connectToWifi() {
+  WiFi.begin(ssid, password);
+ 
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.println("Connecting to WiFi..");
+  }
+ 
+  Serial.println("Connected to the WiFi network");
+  Serial.println(WiFi.localIP());
+}
 
 void setup() {
   // Declare pins as output:
@@ -14,6 +31,9 @@ void setup() {
   pinMode(dirPin, OUTPUT);
   Serial.begin(115200);
   Serial.println("hey I made it to setup");
+
+  connectToWifi();
+  initWebSocket();
   
   // Set the spinning direction CW/CCW:
 //  digitalWrite(dirPin, HIGH);
@@ -33,15 +53,6 @@ void setup() {
   }
 }
 
-void sendPulse(bool forward) {
-  digitalWrite(dirPin, forward ? 1 : 0);
-  
-  digitalWrite(stepPin, HIGH);
-  delayMicroseconds(600);
-  digitalWrite(stepPin, LOW);
-  delayMicroseconds(600); 
-}
-
 void loop() {
   Serial.println("We're here in the main loop!");
 
@@ -59,6 +70,6 @@ void loop() {
     * If turning LEFT, send RIGHT [5?] and LEFT[1?] ... some ratio.
     * Opposite for turning RIGHT.
     */
-  
-  delay(4000);
+//  ws.cleanupClients(); // this might be necessary?
+  delay(10000);
 }
