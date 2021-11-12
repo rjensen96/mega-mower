@@ -34,16 +34,30 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
   
   AwsFrameInfo *info = (AwsFrameInfo*)arg;
   if (info->final && info->index == 0 && info->len == len && info->opcode == WS_TEXT) {
-    data[len] = 0;
-    if (strcmp((char*)data, "forward") == 0) {
-      testDrive(true);
-      Serial.println("GO FORWARD");
-      notifyClients("Received go forward request!");
-    } else if (strcmp((char*)data, "reverse") == 0) {
-      testDrive(false);
-      Serial.println("FULL REVERSE");
-      notifyClients("Received go backward request!");
+//    data[len] = 0;
+// todo: check if length actually is zero?
+
+    for(int i = 0; i < len; i++) {
+      Serial.println(data[i]);
+      Serial.println();
     }
+    
+//    Serial.println(*data + "");
+//    if(*data == 90) {
+//      Serial.println("go forward!");
+//    } else if (*data == 270) {
+//      Serial.println("go bakcward!");
+//    }
+
+//    if (strcmp((char*)data, "forward") == 0) {
+//      testDrive(true);
+//      Serial.println("GO FORWARD");
+//      notifyClients("Received go forward request!");
+//    } else if (strcmp((char*)data, "reverse") == 0) {
+//      testDrive(false);
+//      Serial.println("FULL REVERSE");
+//      notifyClients("Received go backward request!");
+//    }
   }
 }
 

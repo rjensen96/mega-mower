@@ -46,9 +46,7 @@ function handleKeyUp(e) {
   }
 }
 
-function sendDriveCommand() {
-  // todo: check if ws is open
-
+const getKeysDownString = () => {
   // idea: get array of what is pressed, and sort it.
   // then concatenate it.
   // then use those concatenated keys to figure out what to do.
@@ -59,24 +57,39 @@ function sendDriveCommand() {
     }
   }
 
-  arKeysDown.sort();
+  return arKeysDown.sort().join("");
+};
 
-  const keysDownString = arKeysDown.join("");
-  // https://www.w3schools.com/js/js_bitwise.asp
+function sendDriveCommand() {
+  // todo: check if ws is open
+
   const commands = {
-    KeyW: { left: 11111111, right: 11111111 },
-    KeyS: { left: 11111111, right: 11111111 },
+    // list of DEGREES representing DIRECTION vehicle should move.
+    // consult the unit circle if you have forgotten how degrees work.
+    // 90 is pure forward; 270 is pure reverse.
+
+    // signular commands
+    KeyW: 90,
+    KeyA: 180,
+    KeyS: 270,
+    KeyD: 0,
+
+    // diagonals
+    KeyAKeyW: 135,
+    KeyDKeyW: 45,
+    KeyAKeyS: 225,
+    KeyDKeyS: 315,
   };
 
-  console.log(keysDownString);
+  const keysDownString = getKeysDownString();
 
-  if (controlKeysDown["KeyW"]) {
-    console.log("FORWARD");
-  } else if (controlKeysDown["KeyS"]) {
-    console.log("REVERSE");
-  } else if (controlKeysDown["KeyA"]) {
-    console.log("LEFT");
-  } else if (controlKeysDown["KeyD"]) {
-    console.log("RIGHT");
+  if (Object.hasOwnProperty.call(commands, keysDownString)) {
+    console.log("command:", commands[keysDownString]);
+
+    const buffer = new Uint16Array([commands[keysDownString]]).buffer;
+    console.log("buffer:", buffer);
+    const view = new Int16Array(buffer);
+    console.log("view:", view);
+    ws.send(commands[keysDownString]);
   }
 }
