@@ -6,18 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mega Mower</title>
     <link rel="stylesheet" href="./style.css" type="text/css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <h1>Mow your lawn</h1>
+    <h1>mow your lawn</h1>
 
     <div id="keysContainer">
-      <div class="keySetWrapper">
+      <div class="centerFlex">
         <div class="keychipUp" id="KeyW">
           <p>W</p>
         </div>
       </div>
 
-      <div class="keySetWrapper">
+      <div class="centerFlex">
         <div class="keychipUp" id="KeyA">
           <p>A</p>
         </div>
@@ -28,6 +32,11 @@
           <p>D</p>
         </div>
       </div>
+    </div>
+
+    <div class="centerFlex">
+      <h2 id="connectionStatus">Disconnected</h2>
+      <span id="connectionIcon" class="material-icons">cancel</span>
     </div>
 
     <script src="script.js"></script>

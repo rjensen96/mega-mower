@@ -1,25 +1,54 @@
+/* WEBSOCKET SETUP */
+
+let wsIsOpen = false;
+
 const ws = new WebSocket("ws://192.168.86.181/ws");
 
-ws.onopen = () => console.log("WebSocket connected!");
-ws.onclose = () => console.log("WebSocket closed");
+ws.onopen = handleWsOpen;
+ws.onclose = handleWsClose;
 ws.onerror = () => console.log("WebSocket error!");
-ws.onmessage = (e) => console.log("Message from websocket: ", e.data);
+ws.onmessage = handleWsMessage;
 
 ws.binaryType = "arraybuffer";
+
+function handleWsOpen() {
+  console.log("WebSocket connected");
+  wsIsOpen = true;
+  setConnectedState(true);
+}
+
+function handleWsClose() {
+  console.log("WebSocket closed");
+  wsIsOpen = false;
+  setConnectedState(false);
+}
+
+function handleWsMessage(e) {
+  console.log("Message from websocket: ", e.data);
+  // todo: consider preventing new messages from being sent if echoes don't return in good time.
+  // a problem is that the WebSocket gets clogged with commands, ESP32 stalls, then when you least expect it...
+  // every single command goes through and your lawnmower runs over the neighbor's cat.
+  // we would prefer to prevent big backlogs from accumulating like that
+}
+
+/* GLOBAL EVENT HANDLERS */
 
 window.addEventListener("keydown", handleKeyDown);
 window.addEventListener("keyup", handleKeyUp);
 window.setInterval(sendDriveCommand, 50);
 
-function handleForwardClick() {
-  ws.send("forward");
+/* CLIENT STATE MANAGEMENT */
+
+function setConnectedState(isConnected) {
+  const connectionText = isConnected ? "Connected" : "Disconnected";
+  const iconText = isConnected ? "check_circle" : "cancel";
+  const iconColor = isConnected ? "limegreen" : "red";
+  document.getElementById("connectionStatus").innerText = connectionText;
+  document.getElementById("connectionIcon").innerText = iconText;
+  document.getElementById("connectionIcon").style.color = iconColor;
 }
 
-function handleReverseClick() {
-  ws.send("reverse");
-}
-
-/* controls for WASD keys */
+/* CONTROLS FOR WASD KEYS */
 
 const controlKeysDown = {
   KeyW: false,
@@ -43,9 +72,8 @@ function handleKeyUp(e) {
 }
 
 const getKeysDownString = () => {
-  // idea: get array of what is pressed, and sort it.
-  // then concatenate it.
-  // then use those concatenated keys to figure out what to do.
+  // get array of what is pressed, then sort & concatenate it
+  // elsewhere use concatenated key to figure out what to do.
   const arKeysDown = [];
   for (const key in controlKeysDown) {
     if (controlKeysDown[key] === true) {
@@ -57,13 +85,13 @@ const getKeysDownString = () => {
 };
 
 function sendDriveCommand() {
-  // todo: check if ws is open
+  if (!wsIsOpen) {
+    return;
+  }
 
   const commands = {
     // 8 directions in 45 degree increments.
-    // this is so that we can fit the whole payload into a Uint8.
-
-    // signular commands
+    // this is so that we can fit the whole payload into a Uint8. (could even be a single byte)
     KeyD: 1,
     KeyDKeyW: 2,
     KeyW: 3,
