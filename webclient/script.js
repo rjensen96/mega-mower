@@ -11,14 +11,6 @@ window.addEventListener("keydown", handleKeyDown);
 window.addEventListener("keyup", handleKeyUp);
 window.setInterval(sendDriveCommand, 50);
 
-// BUTTONS
-// document
-//   .getElementById("btnForward")
-//   .addEventListener("click", handleForwardClick);
-// document
-//   .getElementById("btnReverse")
-//   .addEventListener("click", handleReverseClick);
-
 function handleForwardClick() {
   ws.send("forward");
 }
@@ -39,12 +31,14 @@ const controlKeysDown = {
 function handleKeyDown(e) {
   if (Object.hasOwnProperty.call(controlKeysDown, e.code)) {
     controlKeysDown[e.code] = true;
+    document.getElementById(e.code).className = "keychipDown";
   }
 }
 
 function handleKeyUp(e) {
   if (Object.hasOwnProperty.call(controlKeysDown, e.code)) {
     controlKeysDown[e.code] = false;
+    document.getElementById(e.code).className = "keychipUp";
   }
 }
 

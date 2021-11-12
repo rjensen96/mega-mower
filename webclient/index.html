@@ -5,11 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mega Mower</title>
+    <link rel="stylesheet" href="./style.css" type="text/css" />
   </head>
   <body>
-    <h1>Mow your lawn.</h1>
-    <p>use WASD to drive the motors.</p>
-    <p>better UI coming soon.</p>
+    <h1>Mow your lawn</h1>
+
+    <div id="keysContainer">
+      <div class="keySetWrapper">
+        <div class="keychipUp" id="KeyW">
+          <p>W</p>
+        </div>
+      </div>
+
+      <div class="keySetWrapper">
+        <div class="keychipUp" id="KeyA">
+          <p>A</p>
+        </div>
+        <div class="keychipUp" id="KeyS">
+          <p>S</p>
+        </div>
+        <div class="keychipUp" id="KeyD">
+          <p>D</p>
+        </div>
+      </div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>
