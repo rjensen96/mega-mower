@@ -27,30 +27,13 @@ void connectToWifi() {
 
 void setup() {
   // Declare pins as output:
-  pinMode(stepPin, OUTPUT);
-  pinMode(dirPin, OUTPUT);
+  pinMode(rightStepPin, OUTPUT);
+  pinMode(rightDirPin, OUTPUT);
   Serial.begin(115200);
-  Serial.println("hey I made it to setup");
 
   connectToWifi();
   initWebSocket();
-  
-  // Set the spinning direction CW/CCW:
-//  digitalWrite(dirPin, HIGH);
 
-  // send pulse forward
-  for(int i = 0; i < 400; i++) {
-    delay(10);
-    sendPulse(true);
-  }
-  
-  delay(1000);
-  
-  // rotate back
-  for(int i = 0; i < 400; i++) {
-    delay(10);
-    sendPulse(false);
-  }
 }
 
 void loop() {

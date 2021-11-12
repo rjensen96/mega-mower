@@ -33,36 +33,25 @@ void notifyClients(String message) {
 void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
   
   AwsFrameInfo *info = (AwsFrameInfo*)arg;
-  if (info->final && info->index == 0 && info->len == len && info->opcode == WS_TEXT) {
-//    data[len] = 0;
-// todo: check if length actually is zero?
-
+  if (info->final && info->index == 0 && info->len == len && info->opcode == 0x2) {
+    /* BINARY MESSAGES */
+    // these are numbers 1 - 8 inclusive. 
+    // represents the direction the vehicle should be going.
     for(int i = 0; i < len; i++) {
-      Serial.println(data[i]);
+      Serial.print(data[i]);
       Serial.println();
-    }
-    
-//    Serial.println(*data + "");
-//    if(*data == 90) {
-//      Serial.println("go forward!");
-//    } else if (*data == 270) {
-//      Serial.println("go bakcward!");
-//    }
 
-//    if (strcmp((char*)data, "forward") == 0) {
-//      testDrive(true);
-//      Serial.println("GO FORWARD");
-//      notifyClients("Received go forward request!");
-//    } else if (strcmp((char*)data, "reverse") == 0) {
-//      testDrive(false);
-//      Serial.println("FULL REVERSE");
-//      notifyClients("Received go backward request!");
-//    }
+      uint8_t newDirection = data[i];
+      handleDriveCommand(newDirection);
+      
+    }
+  } else if (info->final && info->index == 0 && info->len == len && info->opcode == 0x1) { 
+      /* TEXT MESSAGES */
+      Serial.println((char*)data); // currently no purpose for text messages.
   }
 }
 
-void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type,
-             void *arg, uint8_t *data, size_t len) {
+void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len) {
   switch (type) {
     case WS_EVT_CONNECT:
       Serial.printf("WebSocket client #%u connected from %s\n", client->id(), client->remoteIP().toString().c_str());

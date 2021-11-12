@@ -5,17 +5,19 @@ ws.onclose = () => console.log("WebSocket closed");
 ws.onerror = () => console.log("WebSocket error!");
 ws.onmessage = (e) => console.log("Message from websocket: ", e.data);
 
+ws.binaryType = "arraybuffer";
+
 window.addEventListener("keydown", handleKeyDown);
 window.addEventListener("keyup", handleKeyUp);
-window.setInterval(sendDriveCommand, 100);
+window.setInterval(sendDriveCommand, 50);
 
 // BUTTONS
-document
-  .getElementById("btnForward")
-  .addEventListener("click", handleForwardClick);
-document
-  .getElementById("btnReverse")
-  .addEventListener("click", handleReverseClick);
+// document
+//   .getElementById("btnForward")
+//   .addEventListener("click", handleForwardClick);
+// document
+//   .getElementById("btnReverse")
+//   .addEventListener("click", handleReverseClick);
 
 function handleForwardClick() {
   ws.send("forward");
@@ -64,32 +66,24 @@ function sendDriveCommand() {
   // todo: check if ws is open
 
   const commands = {
-    // list of DEGREES representing DIRECTION vehicle should move.
-    // consult the unit circle if you have forgotten how degrees work.
-    // 90 is pure forward; 270 is pure reverse.
+    // 8 directions in 45 degree increments.
+    // this is so that we can fit the whole payload into a Uint8.
 
     // signular commands
-    KeyW: 90,
-    KeyA: 180,
-    KeyS: 270,
-    KeyD: 0,
-
-    // diagonals
-    KeyAKeyW: 135,
-    KeyDKeyW: 45,
-    KeyAKeyS: 225,
-    KeyDKeyS: 315,
+    KeyD: 1,
+    KeyDKeyW: 2,
+    KeyW: 3,
+    KeyAKeyW: 4,
+    KeyA: 5,
+    KeyAKeyS: 6,
+    KeyS: 7,
+    KeyDKeyS: 8,
   };
 
   const keysDownString = getKeysDownString();
 
   if (Object.hasOwnProperty.call(commands, keysDownString)) {
-    console.log("command:", commands[keysDownString]);
-
-    const buffer = new Uint16Array([commands[keysDownString]]).buffer;
-    console.log("buffer:", buffer);
-    const view = new Int16Array(buffer);
-    console.log("view:", view);
-    ws.send(commands[keysDownString]);
+    const buffer = new Uint8Array([commands[keysDownString]]).buffer;
+    ws.send(buffer);
   }
 }
