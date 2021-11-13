@@ -92,6 +92,7 @@ function sendDriveCommand() {
   const commands = {
     // 8 directions in 45 degree increments.
     // this is so that we can fit the whole payload into a Uint8. (could even be a single byte)
+    empty: 0,
     KeyD: 1,
     KeyDKeyW: 2,
     KeyW: 3,
@@ -102,7 +103,7 @@ function sendDriveCommand() {
     KeyDKeyS: 8,
   };
 
-  const keysDownString = getKeysDownString();
+  const keysDownString = getKeysDownString() || "empty";
 
   if (Object.hasOwnProperty.call(commands, keysDownString)) {
     const buffer = new Uint8Array([commands[keysDownString]]).buffer;

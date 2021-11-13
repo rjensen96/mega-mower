@@ -35,8 +35,10 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
   AwsFrameInfo *info = (AwsFrameInfo*)arg;
   if (info->final && info->index == 0 && info->len == len && info->opcode == 0x2) {
     /* BINARY MESSAGES */
-    // these are numbers 1 - 8 inclusive. 
+    // these are numbers 0 - 8 inclusive. 
     // represents the direction the vehicle should be going.
+    // todo: consider skipping long chains of commands. if length is huge, then there's a backlog and we shouldn't execute backlogs.
+    // also, at some point we should set motor state to zero if it's been a long time since the last websocket command.
     for(int i = 0; i < len; i++) {
       Serial.print(data[i]);
       Serial.println();

@@ -33,12 +33,23 @@ void setup() {
 
   connectToWifi();
   initWebSocket();
-
 }
 
-void loop() {
-  Serial.println("We're here in the main loop!");
+uint8_t counter = 0;
 
+void loop() {
+  driveTick(counter); // counter is how to determine ratio of steps for left/right
+  
+  // clamp counter to low values to fit in uint8_t
+  if(counter == 250){
+    counter = 1;
+  } else {
+    counter++;
+  }
+  
+  delay(0); // this is smoothest.
+  
+  // idea for joystick movement: (not in use)
   /*            ^
    *    o     < X >   <- arrow keypad controls DIRECTION LEFT/RIGHT
    *    |       V
@@ -46,13 +57,5 @@ void loop() {
    *  
    */
 
-   /*
-    * EACH FRAME IN HERE:
-    * Determine forward/back direction (or zero) -> set pulse rate
-    * Determine right/left direction -> set # of pulses to send each motor
-    * If turning LEFT, send RIGHT [5?] and LEFT[1?] ... some ratio.
-    * Opposite for turning RIGHT.
-    */
 //  ws.cleanupClients(); // this might be necessary?
-  delay(10000);
 }
