@@ -29,6 +29,8 @@ void setup() {
   // Declare pins as output:
   pinMode(rightStepPin, OUTPUT);
   pinMode(rightDirPin, OUTPUT);
+  pinMode(leftStepPin, OUTPUT);
+  pinMode(leftDirPin, OUTPUT);
   Serial.begin(115200);
 
   connectToWifi();
